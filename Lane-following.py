@@ -2,6 +2,7 @@
 import rospy
 import sys
 import cv2
+import math
 import numpy as np
 from matplotlib import pyplot as plt
 %matplotlib inline
@@ -9,6 +10,12 @@ from matplotlib import pyplot as plt
 from sensor_msgs.msg import Joy
 
 from __builtin__ import True
+
+def todo(host):
+    pub = rospy.Publisher('/'+host+'/joy', Joy, queue_size=1)
+    rospy.init_node('joy-cli', anonymous=True)
+    while not rospy.is_shutdown():
+
 
 #recibir la imagen de ros
 img_colour.shape=rgb_from_ros( sensor_msgs.CompressedImage )
@@ -92,7 +99,7 @@ sxf=(rxf+lxf)/2
 syf=(ryf+lyf)/2
 cv2.line(img5,(int(sxi),int(syi)),(int(sxf),int(syf)),(255,255,0),2)
 #Hallar el ángulo de la línea a seguir respecto a la vertical
-import math
+
 if (sxf-sxi)>0:
   ang=math.atan(img5.shape[0]/(sxf-sxi))
   angd=math.degrees(ang)-90
@@ -101,20 +108,10 @@ if (sxf-sxi)<0:
   angd=90-math.degrees(ang)
 if (sxf-sxi)==0:
   angd=90
-
-def keyCatcher(host):
-    pub = rospy.Publisher('/'+host+'/joy', Joy, queue_size=1)
-    rospy.init_node('joy-cli', anonymous=True)
-
-    while not rospy.is_shutdown():
-        direction = raw_input('Enter direction(a,w,s,d)--> ')
-        if direction == 'w':
-            axes = [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
-        elif direction == 's':
-            axes = [0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
-        elif direction == 'd':
+  
+        if angd >0:
             axes = [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0] 
-        elif direction == 'a':
+        elif angd<0:
             axes = [0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0] 
         else:
             axes = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
@@ -134,7 +131,7 @@ if __name__ == '__main__':
         hostname = sys.argv[1]
 
     try:
-        keyCatcher(host = hostname)
+        todo(host = hostname)
     except rospy.ROSInterruptException:
         pass
 
