@@ -1,8 +1,11 @@
 #!/usr/bin/env python2
+#librerias
 import rospy,  roslib
 import sys
 import cv2
 import math
+import picamera
+import picamera.array
 import numpy as np
 from matplotlib import pyplot as plt
 from std_msgs.msg import String
@@ -15,14 +18,20 @@ from sensor_msgs.msg import Joy
 
 from __builtin__ import True
 
-def callback(self,data):
 
-    #From ros_message to array uint8
-    np_arr = np.fromstring(data.data, np.uint8)
+    
 
-    #From uint8 to array for cv2
-    img_colour = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-        
+def todo(host):
+    pub = rospy.Publisher('/'+host+'/joy', Joy, queue_size=1)
+    rospy.init_node('joy-cli', anonymous=True)	
+	#recibir imagen, img_colour contiene un vector de numpy el cual se puede usar en opencv
+    with picamera.PiCamera() as camera:
+    	camera.resolution = (320, 240)
+ 	with picamera.array.PiRGBArray(camera) as output:
+            camera.capture(output, 'rgb')
+            img_colour = output.array
+		
+    
     ##procesamiento de la imagen
     img_size=img_colour.shape
     y=img_size[0]*0.4545
@@ -111,7 +120,7 @@ def callback(self,data):
         angd=90-math.degrees(ang)
     if (sxf-sxi)==0:
         angd=90
-  
+  #enviar mensaje al topico joy para mover el robot
     if angd >0:
         axes = [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0] 
     elif angd<0:
@@ -127,21 +136,7 @@ def callback(self,data):
     msg = Joy(header=None, axes=axes, buttons=None)
     pub.publish(msg)
 
-def todo(host):
-    pub = rospy.Publisher('/'+host+'/joy', Joy, queue_size=1)
-    rospy.init_node('joy-cli', anonymous=True)
-    
 
-
-#recibir la imagen de ros
-#img_colour.shape=rgb_from_ros( sensor_msgs.CompressedImage )
-    try:
-        self.image_sub = rospy.Subscriber("/duckiebot9/image_transformer_node/corrected_image/compressed",CompressedImage, self.callback)
-        #self.image_pub= rospy.Publisher("image_pub",Image)
-        #For no compressed images
-        #self.image_sub = rospy.Subscriber("topic_imagen",Image, self.callback)
-    except:
-	    print("Error Subscriber")
 
 
 if __name__ == '__main__':
