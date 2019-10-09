@@ -8,10 +8,10 @@ RUN apt-get install -y python
 
 
 # Installation of our program
-COPY hello.py /project/hello.py
-RUN chmod +x /project/hello.py
+COPY hello.py /project/Lane-following.py
+RUN chmod +x /project/Lane-following.py
 
 # Setting the program as the default
-CMD /usr/bin/python /project/hello.py
+CMD /usr/bin/python /project/Lane-following.py
 
 
