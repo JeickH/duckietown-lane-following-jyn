@@ -5,8 +5,14 @@ FROM resin/rpi-raspbian
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get install -y python
-RUN apt-get install python-rospy python-matplotlib ros-std-msgs ros-sensor-msgs
-RUN pip install opencv-python maths numpy
+RUN apt-get install python-rospy
+RUN apt-get install python-matplotlib
+RUN apt-get install ros-std-msgs
+RUN apt-get install ros-sensor-msgs
+RUN pip install opencv-python
+RUN pip install maths
+RUN pip install numpy
+
 
 # Installation of our program
 COPY Lane-following.py /project/Lane-following.py
