@@ -101,7 +101,7 @@ def callback(self,data):
     sxf=(rxf+lxf)/2
     syf=(ryf+lyf)/2
     cv2.line(img5,(int(sxi),int(syi)),(int(sxf),int(syf)),(255,255,0),2)
-    #Hallar el angulo de la línea a seguir respecto a la vertical
+    #Hallar el angulo de la linea a seguir respecto a la vertical
 
     if (sxf-sxi)>0:
         ang=math.atan(img5.shape[0]/(sxf-sxi))
