@@ -5,7 +5,8 @@ FROM resin/rpi-raspbian
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get install -y python
-RUN apt-get install python-rospy
+RUN apt install python-roslib
+RUN apt install python-rospy
 RUN apt-get install python-matplotlib
 RUN apt-get install ros-std-msgs
 RUN apt-get install ros-sensor-msgs
