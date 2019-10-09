@@ -8,7 +8,7 @@ RUN apt-get install -y python
 
 
 # Installation of our program
-COPY hello.py /project/Lane-following.py
+COPY Lane-following.py /project/Lane-following.py
 RUN chmod +x /project/Lane-following.py
 
 # Setting the program as the default
