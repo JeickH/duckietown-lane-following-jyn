@@ -142,10 +142,6 @@ def todo(host):
         #self.image_sub = rospy.Subscriber("topic_imagen",Image, self.callback)
     except:
 	    print("Error Subscriber")
-            
-    while not rospy.is_shutdown():
-
-
 
 
 if __name__ == '__main__':
