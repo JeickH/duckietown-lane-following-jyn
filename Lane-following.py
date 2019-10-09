@@ -9,7 +9,7 @@ from std_msgs.msg import String
 
 from sensor_msgs.msg import CompressedImage
 from sensor_msgs.msg import Image
-%matplotlib inline
+#matplotlib inline
 
 from sensor_msgs.msg import Joy
 
