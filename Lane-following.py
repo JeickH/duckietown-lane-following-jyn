@@ -98,18 +98,18 @@ def todo(host):
     lyi=img5.shape[0]
     lyf=0
     lxf=(lyf-img5.shape[0]/promr)+50
-    cv2.line(img5,(50,lyi),(int(lxf),lyf),(0,0,255),2)
+    #cv2.line(img5,(50,lyi),(int(lxf),lyf),(0,0,255),2)
 
     ryi=img5.shape[0]
     ryf=0 
     rxf=(ryf-img5.shape[0]/proml)+750
-    cv2.line(img5,(750,ryi),(int(rxf),ryf),(0,0,255),2)
+    #cv2.line(img5,(750,ryi),(int(rxf),ryf),(0,0,255),2)
     #construccion de linea a seguir
     sxi=img5.shape[1]/2
     syi=img5.shape[0]
     sxf=(rxf+lxf)/2
     syf=(ryf+lyf)/2
-    cv2.line(img5,(int(sxi),int(syi)),(int(sxf),int(syf)),(255,255,0),2)
+    #cv2.line(img5,(int(sxi),int(syi)),(int(sxf),int(syf)),(255,255,0),2)
     #Hallar el angulo de la linea a seguir respecto a la vertical
 
     if (sxf-sxi)>0:
@@ -121,12 +121,12 @@ def todo(host):
     if (sxf-sxi)==0:
         angd=90
   #enviar mensaje al topico joy para mover el robot
-    if angd >0:
+    if angd >5:
         axes = [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0] 
-    elif angd<0:
+    elif angd<-5:
         axes = [0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0] 
     else:
-        axes = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        axes = [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
 
     msg = Joy(header=None, axes=axes, buttons=None)
     pub.publish(msg)
